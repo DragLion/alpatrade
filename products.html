@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Məhsul Detalları | ALPA TRADE</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ============================================================
+           DESIGN SYSTEM
+           ============================================================ */
+        :root {
+            --primary-purp: #000000;
+            --primary-blue: #00000C;
+            --bg-body: #D6D6D6;
+            --text-main: #000000;
+            --text-muted: #555555;
+            --header-bg: rgba(214, 214, 214, 0.98);
+            --border-soft: rgba(0, 0, 0, 0.08);
+            --card-bg: #fafafa;
+        }
+
+        body.dark-mode {
+            --primary-purp: #ffffff;
+            --primary-blue: #ffffff;
+            --bg-body: #0a0a0c;
+            --text-main: #ffffff;
+            --text-muted: #cccccc;
+            --header-bg: rgba(10, 10, 12, 0.98);
+            --border-soft: rgba(255, 255, 255, 0.1);
+            --card-bg: #16161a;
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            outline: none; 
+            border: none; 
+        }
+
+        html { 
+            scroll-behavior: smooth; 
+            overflow-x: hidden; 
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            transition: background 0.5s ease, color 0.5s ease;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, h5 { 
+            font-family: 'Cinzel', serif; 
+            letter-spacing: 2px; 
+            font-weight: 700; 
+            color: var(--text-main); 
+        }
+
+        p { 
+            line-height: 1.9; 
+            font-weight: 400; 
+            color: var(--text-muted); 
+        }
+
+        a { 
+            text-decoration: none !important; 
+            transition: 0.3s; 
+            cursor: pointer;
+        }
+        
+        button { cursor: pointer; }
+
+        ul { list-style: none; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #fff; }
+        ::-webkit-scrollbar-thumb { background: var(--primary-purp); border-radius: 20px; }
+
+        /* ============================================================
+           HEADER (PC ÖLÇÜLƏRİ & MƏRKƏZLƏMƏ)
+           ============================================================ */
+        header {
+            position: fixed;
+            top: 0; 
+            left: 0; 
+            width: 100%;
+            padding: 12px 6% !important; 
+            display: flex !important;
+            justify-content: space-between;
+            align-items: center !important;
+            z-index: 99999;
+            background: var(--header-bg) !important;
+            backdrop-filter: blur(25px);
+            border-bottom: 1px solid var(--border-soft);
+            transition: all 0.4s ease;
+        }
+
+        header.sticky {
+            padding: 8px 6% !important;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .header-logo-img {
+            height: 50px !important; 
+            width: auto; 
+            object-fit: contain;
+            display: block;
+        }
+
+        /* NAV LINKS (TAM MƏRKƏZƏ) */
+        .nav-links {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex: 1; 
+            background: transparent !important;
+            gap: 35px !important; 
+            margin: 0 40px;
+        }
+
+        .nav-links a, .dropdown > a {
+            display: flex !important;
+            align-items: center !important;
+            gap: 6px;
+            line-height: 1 !important;
+            font-family: 'Montserrat', sans-serif !important;
+            font-size: 0.85rem !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            color: var(--text-main) !important;
+            letter-spacing: 2.2px !important;
+            text-decoration: none !important;
+            transition: 0.3s ease;
+        }
+
+        @media (min-width: 1025px) {
+            .nav-links a:hover { opacity: 0.6; }
+        }
+
+        /* ============================================================
+           DROPDOWN MENU SYSTEM
+           ============================================================ */
+        .dropdown, .sub-dropdown { position: relative; }
+        .sub-dropdown { display: block; width: 100%; }
+
+        .drop-icon, .sub-drop, .fas.fa-chevron-down {
+            display: inline-block !important;
+            font-family: "Font Awesome 6 Free" !important;
+            font-weight: 900 !important;
+            margin-left: 6px !important;
+            font-size: 0.7rem !important;
+            color: inherit !important;
+            transition: transform 0.3s ease;
+            vertical-align: middle;
+            margin-top: 1px;
+        }
+
+        .dropdown-content a, .sub-dropdown-content a {
+            color: var(--text-main) !important;
+            padding: 12px 20px !important;
+            display: block;
+            font-size: 0.75rem !important;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+            text-align: left;
+            transition: 0.2s;
+            background-color: transparent !important;
+        }
+
+        .dropdown-content a:hover, .sub-dropdown-content a:hover {
+            background: var(--primary-blue) !important;
+            color: #fff !important;
+        }
+
+        body.dark-mode .dropdown-content a:hover,
+        body.dark-mode .sub-dropdown-content a:hover {
+            background: rgba(255,255,255,0.15) !important;
+            color: #ffffff !important;
+        }
+
+        /* PC Hover Actions */
+        @media (min-width: 1025px) {
+            .mobile-menu-btn { display: none !important; }
+            
+            .dropdown-content, .sub-dropdown-content {
+                position: absolute;
+                background-color: var(--header-bg) !important;
+                min-width: 260px !important;
+                border: 1px solid var(--border-soft);
+                box-shadow: 10px 10px 30px rgba(0,0,0,0.1);
+                border-radius: 8px;
+                padding: 10px 0;
+                z-index: 1000;
+                visibility: hidden;
+                opacity: 0;
+                pointer-events: none;
+                transition: all 0.3s ease-in-out;
+            }
+
+            .dropdown-content { top: 100%; left: 0; transform: translateY(10px); }
+            .sub-dropdown-content { top: -10px; left: 100%; transform: translateX(10px); }
+            .sub-dropdown::after { content: ''; position: absolute; top: 0; right: -20px; width: 20px; height: 100%; }
+
+            .dropdown:hover > .dropdown-content { visibility: visible; opacity: 1; pointer-events: auto; transform: translateY(0); }
+            .sub-dropdown:hover > .sub-dropdown-content { visibility: visible; opacity: 1; pointer-events: auto; transform: translateX(0); }
+            .dropdown:hover > a .drop-icon, .sub-dropdown:hover > a .sub-drop { transform: rotate(180deg) !important; }
+        }
+
+        /* ============================================================
+           HEADER META & ICONS
+           ============================================================ */
+        .header-meta { display: flex; align-items: center; gap: 25px; flex-shrink: 0; }
+        .lang-control { display: flex !important; gap: 5px; background: rgba(0, 0, 0, 0.05); padding: 5px; border-radius: 50px; }
+        .lang-trigger { padding: 6px 14px; border-radius: 50px; font-size: 0.7rem; font-weight: 800; cursor: pointer; transition: 0.3s; border: none; background: transparent; color: var(--text-main); font-family: 'Montserrat', sans-serif; }
+        
+        .lang-trigger.active { background: var(--primary-purp); color: #fff; }
+        body.dark-mode .lang-trigger.active { background: #ffffff; color: #000000; }
+        body.dark-mode .lang-control { background: rgba(255, 255, 255, 0.1); }
+        .mobile-menu-btn { display: none !important; font-size: 1.8rem; cursor: pointer; color: var(--text-main); }
+
+        /* ============================================================
+           PRODUCT AREA & SLIDER (ƏSAS SƏHİFƏ İLƏ TAM EYNİ)
+           ============================================================ */
+        .product-area {
+            padding: 160px 8% 100px;
+            display: flex;
+            gap: 80px;
+            align-items: center;
+            flex-wrap: wrap;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .product-img-box {
+            flex: 0.8;
+            height: 500px;
+            border-radius: 40px;
+            overflow: hidden !important;
+            background: var(--card-bg);
+            border: 1px solid var(--border-soft);
+            position: relative;
+            display: flex;
+        }
+
+        #sliderEngine {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        /* Əlavə div qabı silindi. Şəkillər birbaşa mühərrikin içindədir! */
+        #sliderEngine img {
+            min-width: 100%;
+            max-width: 100%;
+            height: 100%;
+            object-fit: cover; /* Qutunu kəsintisiz doldurur */
+            transform-origin: center;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(62, 37, 117, 0.6);
+            color: white;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            transition: 0.3s;
+            opacity: 0;
+        }
+
+        .product-img-box:hover .nav-btn { opacity: 1; }
+        .nav-btn:hover { background: var(--primary-blue); transform: translateY(-50%) scale(1.1); }
+        
+        body.dark-mode .nav-btn { background: rgba(255,255,255,0.2); }
+        body.dark-mode .nav-btn:hover { background: rgba(255,255,255,0.5); }
+        
+        .prev-btn { left: 25px; }
+        .next-btn { right: 25px; }
+
+        .product-text-box {
+            flex: 1;
+            min-width: 350px;
+        }
+
+        .product-text-box h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            margin-bottom: 30px;
+            line-height: 1.1;
+            color: var(--text-main);
+        }
+
+        .product-text-box p {
+            font-size: 1.2rem;
+            line-height: 2.1;
+            color: var(--text-muted);
+            margin-bottom: 50px;
+        }
+
+        .back-to-site {
+            display: inline-block;
+            padding: 22px 60px;
+            border: 1.5px solid var(--text-main);
+            color: var(--text-main) !important;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-weight: 900;
+            font-size: 0.8rem;
+            background: transparent;
+            transition: 0.6s;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .back-to-site:hover {
+            background: var(--text-main);
+            border-color: var(--text-main);
+            color: var(--bg-body) !important;
+            transform: translateY(-5px);
+        }
+
+        body.dark-mode .product-img-box { background: var(--card-bg) !important; border: 1px solid var(--border-soft) !important; }
+        body.dark-mode header { background: var(--header-bg) !important; border-bottom: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        body.dark-mode .dropdown-content, body.dark-mode .sub-dropdown-content { background-color: var(--card-bg) !important; }
+
+        footer {
+            text-align: center;
+            padding: 50px 100px;
+            border-top: 1px solid var(--border-soft);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            letter-spacing: 5px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* ============================================================
+           MOBILE & RESPONSIVE
+           ============================================================ */
+        @media (max-width: 1024px) {
+            header { padding: 15px 5% !important; }
+            .header-logo-img { height: 40px !important; margin-right: 0; }
+            .header-meta { margin-left: auto; gap: 15px !important; order: 2; }
+            .lang-control { padding: 3px; }
+            .lang-trigger { padding: 4px 10px; font-size: 0.6rem; }
+            .mobile-menu-btn { display: block !important; margin-left: 10px; order: 3; }
+
+            .nav-links {
+                position: fixed !important; top: 0; right: -100%; width: 75% !important; height: 100vh;
+                background: var(--header-bg) !important; flex-direction: column !important;
+                justify-content: flex-start !important; align-items: flex-start !important;
+                padding: 100px 30px !important; transition: 0.4s ease-in-out;
+                z-index: 10000; box-shadow: -10px 0 30px rgba(0,0,0,0.2); overflow-y: auto; gap: 0 !important; margin: 0 !important; 
+            }
+
+            .nav-links.active { right: 0 !important; }
+
+            .nav-links a {
+                font-size: 1rem !important; padding: 15px 0 !important; border-bottom: 1px solid var(--border-soft); width: 100%; display: flex !important; justify-content: space-between !important;
+            }
+
+            .dropdown-content, .sub-dropdown-content {
+                display: none; position: relative !important; width: 100% !important; background-color: transparent !important; padding-left: 20px !important; box-shadow: none !important; border: none !important; transform: none !important; opacity: 1 !important; visibility: visible !important; top: 0 !important; left: 0 !important; min-width: unset !important; pointer-events: auto !important;
+            }
+
+            .dropdown.open > .dropdown-content, .sub-dropdown.open > .sub-dropdown-content { display: block !important; }
+            .dropdown.open > a .drop-icon, .sub-dropdown.open > a .sub-drop { transform: rotate(180deg) !important; }
+            .dropdown-content a, .sub-dropdown-content a { padding: 12px 0 12px 20px !important; border: none !important; }
+
+            /* MOBİL QUTU ÖLÇÜLƏRİ - PROBLEM BURADA HƏLL OLDU! */
+            .product-area {
+                flex-direction: column !important; text-align: center !important; padding: 110px 5% 60px !important; gap: 40px;
+            }
+
+            .product-img-box {
+                height: 460px !important;  /* Şəklin baş-ayaq kəsilməməsi üçün hündürlük artırıldı */
+                width: 100% !important; 
+                flex: unset;
+            }
+
+            .product-text-box { min-width: unset; width: 100%; }
+            .product-text-box h1 { font-size: 2rem; }
+            .product-text-box p { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="mainHeader">
+        <div class="brand-logo">
+            <a href="index.html">
+                <img src="https://i.ibb.co/BVx4WgKH/Logo.png" class="header-logo-img" alt="ALPA TRADE Logo">
+            </a>
+        </div>
+
+        <nav class="nav-links">
+            <a href="index.html#home" data-lang="n1">Ana Səhifə</a>
+            <a href="index.html#corporate" data-lang="n2">Korporativ</a>
+
+            <div class="dropdown">
+                <a href="javascript:void(0)" data-lang="n3">Məhsullar <i class="fas fa-chevron-down drop-icon"></i></a>
+                <div class="dropdown-content">
+                    <a href="products.html?type=alcoline">ALCOLINE</a>
+                    <a href="products.html?type=eldorado">ELDORADO</a>
+                    <div class="sub-dropdown">
+                        <a href="javascript:void(0)">FEVER-TREE <i class="fas fa-chevron-down sub-drop"></i></a>
+                        <div class="sub-dropdown-content">
+                            <a href="products.html?type=indian">Premium Indian Tonic</a>
+                            <a href="products.html?type=mediterranean">Mediterranean Tonic</a>
+                            <a href="products.html?type=lightindian">Light Indian Tonic</a>
+                            <a href="products.html?type=ginger-ale">Ginger Ale</a>
+                            <a href="products.html?type=ginger-beer">Ginger Beer</a>
+                            <a href="products.html?type=lightcola">Madagascan Cola</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="index.html#social" data-lang="n_social">Sosial</a>
+            <a href="index.html#contact" data-lang="n4">Əlaqə</a>
+        </nav>
+
+        <div class="header-meta">
+            <div class="lang-control">
+                <button class="lang-trigger active" data-code="az" onclick="switchSystemLang('az', this)">AZ</button>
+                <button class="lang-trigger" data-code="en" onclick="switchSystemLang('en', this)">EN</button>
+                <button class="lang-trigger" data-code="ru" onclick="switchSystemLang('ru', this)">RU</button>
+            </div>
+
+            <a href="https://wa.me/994554000701" target="_blank" style="color: #25D366; font-size: 1.5rem;">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+
+            <div id="theme-toggle" onclick="toggleTheme()" style="cursor: pointer; font-size: 1.2rem; color: var(--text-main);">
+                <i class="fas fa-moon" id="theme-icon"></i>
+            </div>
+
+            <div class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="product-area">
+        <div class="product-img-box">
+            <div class="nav-btn prev-btn" onclick="moveSlide(-1)">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <div id="sliderEngine"></div>
+            <div class="nav-btn next-btn" onclick="moveSlide(1)">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+
+        <div class="product-text-box">
+            <h1 id="main-title">Yüklənir...</h1>
+            <p id="main-desc">...</p>
+            <a href="index.html#brands" class="back-to-site" data-lang="all_p">Bütün Məhsullar</a>
+        </div>
+    </div>
+
+    <footer>© 2026 ALPA TRADE ASC.</footer>
+
+    <script>
+        /* ── Sticky Header ── */
+        window.addEventListener('scroll', () => {
+            document.getElementById('mainHeader').classList.toggle('sticky', window.scrollY > 50);
+        });
+
+        /* ── Product Database ── */
+        const products = {
+            'alcoline': {
+                title: { az: 'ALCOLINE PREMIUM VODKA', en: 'ALCOLINE PREMIUM VODKA', ru: 'ALCOLINE PREMIUM VODKA' },
+                desc: {
+                    az: 'Orqanik tərkibli premium araq kolleksiyası. Kristal təmizliyi və yumşaq dadı ilə seçilir.',
+                    en: 'Premium vodka collection with organic ingredients. Distinguished by crystal clarity and smooth taste.',
+                    ru: 'Коллекция премиальной водки с органическим составом. Отличается кристальной чистотой и мягким вкусом.'
+                },
+                imgs: [
+                    'https://i.postimg.cc/44WNWGNk/ALCO-1.png',
+                    'https://i.ibb.co/N2pCSHBy/ALCO-2.jpg',
+                    'https://i.ibb.co/BHZ9wQxq/ALCO-4.jpg'
+                ],
+                // Əsas səhifədəki ilə eyni kəsim (cover) koordinatları
+                imgStyles: [
+                    'object-position: 50% 60%;',
+                    'object-position: 50% 30%;',
+                    'object-position: 50% 85%;'
+                ]
+            },
+            'eldorado': {
+                title: { az: 'ELDORADO PREMIUM VODKA', en: 'ELDORADO PREMIUM VODKA', ru: 'ELDORADO PREMIUM VODKA' },
+                desc: {
+                    az: 'Güc və enerjinin kristal təmizliyindəki unikal distribusiyası. Premium dad təcrübəsi.',
+                    en: 'Unique distribution of power and energy in crystal clarity. Premium taste experience.',
+                    ru: 'Уникальное проявление силы и энергии в кристальной чистоте. Премиальный вкусовой опыт.'
+                },
+                imgs: ['https://i.ibb.co/k64PDg76/Eldorado.jpg'],
+                imgStyles: ['object-position: 50% 50%;']
+            },
+            'indian': {
+                title: { az: 'Premium Indian Tonic Water', en: 'Premium Indian Tonic Water', ru: 'Premium Indian Tonic Water' },
+                desc: {
+                    az: 'Ən təmiz kinin və botanik yağların qarışığından hazırlanan dünyanın 1 nömrəli mikseri.',
+                    en: "World's No.1 mixer crafted from the purest quinine and natural botanicals.",
+                    ru: 'Миксер №1 в мире из чистейшего хинина и натуральных ботанических масел.'
+                },
+                imgs: ['https://i.ibb.co/27bZB7xT/1.png'],
+                imgStyles: ['object-position: 50% 50%;']
+            },
+            'mediterranean': {
+                title: { az: 'Mediterranean Tonic Water', en: 'Mediterranean Tonic Water', ru: 'Mediterranean Tonic Water' },
+                desc: {
+                    az: 'Aralıq dənizi sahillərindən toplanmış kəklikotu və rozmarin notları ilə zənginləşdirilmiş mikser.',
+                    en: 'Mixer enriched with thyme and rosemary gathered from Mediterranean shores.',
+                    ru: 'Миксер, обогащённый тимьяном и розмарином с берегов Средиземного моря.'
+                },
+                imgs: ['https://i.ibb.co/TxFY0D86/3.png'],
+                imgStyles: ['object-position: 50% 50%;']
+            },
+            'lightindian': {
+                title: { az: 'Light Indian Tonic Water', en: 'Light Indian Tonic Water', ru: 'Light Indian Tonic Water' },
+                desc: {
+                    az: 'Zərif və az kalorili premium tonik təcrübəsi.',
+                    en: 'Delicate low-calorie premium tonic experience.',
+                    ru: 'Нежный низкокалорийный премиальный тоник.'
+                },
+                imgs: ['https://i.ibb.co/4nZQkb8S/5.jpg'],
+                imgStyles: ['object-position: 50% 50%;']
+            },
+            'ginger-ale': {
+                title: { az: 'Premium Ginger Ale', en: 'Premium Ginger Ale', ru: 'Premium Ginger Ale' },
+                desc: {
+                    az: 'Dünyanın üç fərqli yerindən gələn təbii zəncəfil kökləri ilə hazırlanan kəskin dad.',
+                    en: 'Sharp flavour crafted from three different natural ginger roots worldwide.',
+                    ru: 'Острый вкус, созданный из трёх видов натурального имбиря со всего мира.'
+                },
+                imgs: ['https://i.ibb.co/5WNXmjC7/2.png'],
+                imgStyles: ['object-position: 50% 50%;']
+            },
+            'ginger-beer': {
+                title: { az: 'Premium Ginger Beer', en: 'Premium Ginger Beer', ru: 'Premium Ginger Beer' },
+                desc: {
+                    az: 'Təbii zəncəfil fermentasiyası ilə hazırlanan güclü və təravətləndirici içki.',
+                    en: 'Powerful and refreshing drink prepared with natural ginger fermentation.',
+                    ru: 'Мощный освежающий напиток, приготовленный с натуральной ферментацией имбиря.'
+                },
+                imgs: ['https://i.ibb.co/CsXG9rkZ/4.png'],
+                imgStyles: ['object-position: 50% 50%;']
+            },
+            'lightcola': {
+                title: { az: 'Madagascan Cola', en: 'Madagascan Cola', ru: 'Madagascan Cola' },
+                desc: {
+                    az: 'Madaqaskar vanili və təbii kofein ilə hazırlanmış premium kola.',
+                    en: 'Premium cola crafted with Madagascar vanilla and natural caffeine.',
+                    ru: 'Премиальная кола с ванилью Мадагаскара и натуральным кофеином.'
+                },
+                imgs: ['https://i.ibb.co/tpPCNp12/6.webp'],
+                imgStyles: ['object-position: 50% 50%;']
+            }
+        };
+
+        /* ── Load Product from URL ── */
+        const urlParams = new URLSearchParams(window.location.search);
+        const productType = urlParams.get('type') || 'alcoline';
+        const item = products[productType];
+
+        let activeLang = localStorage.getItem('selectedLang') || 'az';
+
+        function loadProductContent(lang) {
+            if (!item) {
+                document.getElementById('main-title').innerText = '404 — Məhsul tapılmadı';
+                document.getElementById('main-desc').innerText = 'Bu məhsul mövcud deyil.';
+                return;
+            }
+            document.getElementById('main-title').innerText = item.title[lang] || item.title['az'];
+            document.getElementById('main-desc').innerText = item.desc[lang] || item.desc['az'];
+        }
+
+        if (item) {
+            const engine = document.getElementById('sliderEngine');
+            engine.innerHTML = '';
+
+            item.imgs.forEach((src, index) => {
+                // Diqqət: Şəkillər əlavə wrapper olmadan birbaşa engine içinə əlavə edilir!
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = item.title['az'];
+                img.loading = 'lazy';
+
+                // Təyin olunmuş object-position-ları tətbiq edirik
+                if (item.imgStyles && item.imgStyles[index]) {
+                    img.style.cssText = item.imgStyles[index];
+                }
+
+                engine.appendChild(img);
+            });
+        }
+
+        /* ── Slider ── */
+        let currentSlide = 0;
+        function moveSlide(direction) {
+            const engine = document.getElementById('sliderEngine');
+            const slides = engine.querySelectorAll('img'); // Birbaşa img teqlərini sayır
+            const total = slides.length;
+            if (total <= 1) return;
+            currentSlide = (currentSlide + direction + total) % total;
+            engine.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        /* ── Dark Mode ── */
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                icon.style.color = '#f1c40f';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                icon.style.color = '';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        /* ── Mobile Menu Toggling ── */
+        function toggleMobileMenu() {
+            const nav = document.querySelector('.nav-links');
+            const icon = document.querySelector('.mobile-menu-btn i');
+            nav.classList.toggle('active');
+            
+            if (nav.classList.contains('active')) {
+                icon.classList.replace('fa-bars', 'fa-times');
+            } else {
+                icon.classList.replace('fa-times', 'fa-bars');
+                document.querySelectorAll('.dropdown, .sub-dropdown').forEach(d => d.classList.remove('open'));
+            }
+        }
+
+        document.addEventListener('click', (e) => {
+            const nav = document.querySelector('.nav-links');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const icon = document.querySelector('.mobile-menu-btn i');
+            const clickedLink = e.target.closest('a');
+
+            if (clickedLink && nav.contains(clickedLink)) {
+                const parentLi = clickedLink.parentElement;
+                
+                if (window.innerWidth <= 1024) {
+                    if (parentLi.classList.contains('dropdown') || parentLi.classList.contains('sub-dropdown')) {
+                        e.preventDefault(); 
+                        parentLi.classList.toggle('open');
+                        return; 
+                    }
+                }
+
+                if (!clickedLink.querySelector('.drop-icon') && !clickedLink.querySelector('.sub-drop')) {
+                    nav.classList.remove('active');
+                    if(icon) icon.classList.replace('fa-times', 'fa-bars');
+                    document.querySelectorAll('.dropdown, .sub-dropdown').forEach(d => d.classList.remove('open'));
+                }
+            }
+
+            if (nav.classList.contains('active') && !nav.contains(e.target) && menuBtn && !menuBtn.contains(e.target)) {
+                nav.classList.remove('active');
+                if(icon) icon.classList.replace('fa-times', 'fa-bars');
+                document.querySelectorAll('.dropdown, .sub-dropdown').forEach(d => d.classList.remove('open'));
+            }
+        });
+
+        /* ── Language System ── */
+        const navLexicon = {
+            az: { n1: "Ana Səhifə", n2: "Korporativ", n3: "Məhsullar", n_social: "Sosial", n4: "Əlaqə", all_p: "Bütün Məhsullar" },
+            en: { n1: "Home", n2: "Corporate", n3: "Products", n_social: "Social", n4: "Contact", all_p: "All Products" },
+            ru: { n1: "Главная", n2: "Корпорация", n3: "Продукты", n_social: "Соц. сети", n4: "Контакт", all_p: "Все продукты" }
+        };
+
+        function switchSystemLang(lang, btn) {
+            activeLang = lang;
+            document.querySelectorAll('.lang-trigger').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            localStorage.setItem('selectedLang', lang);
+
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                const key = el.getAttribute('data-lang');
+                if (navLexicon[lang] && navLexicon[lang][key]) {
+                    const icon = el.querySelector('i');
+                    if (icon) {
+                        const textNode = Array.from(el.childNodes).find(n => n.nodeType === Node.TEXT_NODE);
+                        if (textNode) {
+                            textNode.textContent = navLexicon[lang][key] + ' ';
+                        } else {
+                            el.insertBefore(document.createTextNode(navLexicon[lang][key] + ' '), icon);
+                        }
+                    } else if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.setAttribute('placeholder', navLexicon[lang][key]);
+                    } else {
+                        el.textContent = navLexicon[lang][key];
+                    }
+                }
+            });
+
+            loadProductContent(lang);
+        }
+
+        /* ── Init on Load ── */
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                const icon = document.getElementById('theme-icon');
+                if (icon) {
+                    icon.classList.replace('fa-moon', 'fa-sun');
+                    icon.style.color = '#f1c40f';
+                }
+            }
+
+            const savedLang = localStorage.getItem('selectedLang') || 'az';
+            const targetBtn = document.querySelector(`.lang-trigger[data-code="${savedLang}"]`);
+            if (targetBtn) {
+                switchSystemLang(savedLang, targetBtn);
+            } else {
+                loadProductContent(savedLang);
+            }
+        });
+    </script>
+</body>
+</html>
