@@ -7,7 +7,6 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
     <style>
         /* ============================================================
@@ -69,7 +68,13 @@
         }
 
         ul { list-style: none; }
-        a { text-decoration: none !important; transition: 0.3s; cursor: pointer; }
+        
+        a { 
+            text-decoration: none !important; 
+            transition: 0.3s; 
+            cursor: pointer; 
+        }
+        
         button { cursor: pointer; }
 
         ::-webkit-scrollbar { width: 5px; }
@@ -105,6 +110,17 @@
         .p1 { color: #3E2775; }
         .p2 { color: #558CCC; }
 
+        .loader-subtitle {
+            color: var(--primary-blue); 
+            font-size: 1.2rem; 
+            font-weight: 900; 
+            margin-top: 40px; 
+            text-transform: uppercase;
+            text-align: center; /* Mərkəzə yığır */
+            line-height: 1.8; /* Sətirlər arası məsafə */
+            letter-spacing: 10px;
+        }
+
         @keyframes typing { from { width: 0 } to { width: 520px } }
         @keyframes blink { from, to { border-color: transparent } 50% { border-color: var(--primary-blue) } }
 
@@ -113,7 +129,9 @@
            ============================================================ */
         header {
             position: fixed;
-            top: 0; left: 0; width: 100%;
+            top: 0; 
+            left: 0; 
+            width: 100%;
             padding: 12px 6% !important;
             display: flex !important;
             justify-content: space-between;
@@ -125,11 +143,25 @@
             transition: all 0.4s ease;
         }
 
-        header.sticky { padding: 8px 6% !important; box-shadow: 0 10px 40px rgba(0,0,0,0.06); }
+        header.sticky {
+            padding: 8px 6% !important;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+        }
 
-        .brand-logo { display: flex; align-items: center; flex-shrink: 0; }
-        .header-logo-img { height: 50px !important; width: auto; object-fit: contain; display: block; }
+        .brand-logo { 
+            display: flex; 
+            align-items: center; 
+            flex-shrink: 0; 
+        }
 
+        .header-logo-img {
+            height: 50px !important;
+            width: auto; 
+            object-fit: contain;
+            display: block;
+        }
+
+        /* NAV LINKS */
         .nav-links {
             display: flex !important;
             align-items: center !important;
@@ -155,7 +187,9 @@
             transition: 0.3s ease;
         }
 
-        @media (min-width: 1025px) { .nav-links a:hover { opacity: 0.6; } }
+        @media (min-width: 1025px) { 
+            .nav-links a:hover { opacity: 0.6; } 
+        }
 
         /* DROPDOWN SYSTEM */
         .dropdown, .sub-dropdown { position: relative; }
@@ -213,6 +247,7 @@
                 pointer-events: none;
                 transition: all 0.3s ease-in-out;
             }
+
             .dropdown-content { top: 100%; left: 0; transform: translateY(10px); }
             .sub-dropdown-content { top: -10px; left: 100%; transform: translateX(10px); }
             .sub-dropdown::after { content: ''; position: absolute; top: 0; right: -20px; width: 20px; height: 100%; }
@@ -256,7 +291,12 @@
             background-color: #FFF; 
         }
         
-        .hero-slide::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.48); }
+        .hero-slide::after { 
+            content: ''; 
+            position: absolute; 
+            inset: 0; 
+            background: rgba(0,0,0,0.48); 
+        }
         
         .hero-inner-box { 
             position: relative; 
@@ -285,29 +325,63 @@
             animation: fadeInUp 1s ease-out forwards;
         }
         
-        .hero-inner-box h1 span { color: #3E2775 !important; -webkit-text-stroke: 0 !important; }
+        .hero-inner-box h1 span { 
+            color: #3E2775 !important; 
+            -webkit-text-stroke: 0 !important; 
+        }
 
-        .slider-manual { position: absolute; bottom: 80px; left: 8%; z-index: 1000; display: flex; gap: 20px; }
+        .slider-manual { 
+            position: absolute; 
+            bottom: 80px; 
+            left: 8%; 
+            z-index: 1000; 
+            display: flex; 
+            gap: 20px; 
+        }
 
         /* --- PREMIUM BUTTON SHINE --- */
         .premium-btn, .master-submit-btn { 
-            display: inline-block; padding: 22px 60px; border: 1.5px solid #fff; color: #fff; text-transform: uppercase; 
-            letter-spacing: 5px; font-weight: 900; font-size: 0.8rem; background: transparent; transition: 0.6s; cursor: pointer; 
-            position: relative; overflow: hidden; font-family: 'Montserrat', sans-serif;
-            animation: fadeInUp 1s ease-out 0.3s forwards; opacity: 0;
+            display: inline-block; 
+            padding: 22px 60px; 
+            border: 1.5px solid #fff; 
+            color: #fff; 
+            text-transform: uppercase; 
+            letter-spacing: 5px; 
+            font-weight: 900; 
+            font-size: 0.8rem; 
+            background: transparent; 
+            transition: 0.6s; 
+            cursor: pointer; 
+            position: relative; 
+            overflow: hidden; 
+            font-family: 'Montserrat', sans-serif;
+            animation: fadeInUp 1s ease-out 0.3s forwards; 
+            opacity: 0;
         }
         
         .premium-btn::before, .master-submit-btn::before {
-            content: ''; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            left: -150%; 
+            width: 50%; 
+            height: 100%;
             background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
-            transform: skewX(-25deg); transition: all 0.7s ease;
+            transform: skewX(-25deg); 
+            transition: all 0.7s ease;
         }
         
         body.dark-mode .premium-btn::before, body.dark-mode .master-submit-btn::before {
             background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0) 100%);
         }
 
-        .premium-btn:hover { background: var(--primary-blue); border-color: var(--primary-blue); transform: translateY(-5px); color: #fff !important; }
+        .premium-btn:hover { 
+            background: var(--primary-blue); 
+            border-color: var(--primary-blue); 
+            transform: translateY(-5px); 
+            color: #fff !important; 
+        }
+        
         .premium-btn:hover::before, .master-submit-btn:hover::before { left: 150%; }
 
         .slider-manual .premium-btn { opacity: 1; animation: none; }
@@ -336,12 +410,38 @@
             display: flex; 
         }
         
-        .brand-slider-engine { display: flex; width: 100%; height: 100%; transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1); }
-        .brand-slider-engine img { min-width: 100%; max-width: 100%; height: 100%; object-fit: cover; transform-origin: center; display: block; }
+        .brand-slider-engine { 
+            display: flex; 
+            width: 100%; 
+            height: 100%; 
+            transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1); 
+        }
+        
+        .brand-slider-engine img { 
+            min-width: 100%; 
+            max-width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transform-origin: center; 
+            display: block; 
+        }
         
         .brand-nav-btn { 
-            position: absolute; top: 50%; transform: translateY(-50%); background: rgba(62, 37, 117, 0.6); color: white; width: 50px; height: 50px; 
-            display: flex; align-items: center; justify-content: center; border-radius: 50%; cursor: pointer; z-index: 10; transition: 0.3s; opacity: 0; 
+            position: absolute; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            background: rgba(62, 37, 117, 0.6); 
+            color: white; 
+            width: 50px; 
+            height: 50px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border-radius: 50%; 
+            cursor: pointer; 
+            z-index: 10; 
+            transition: 0.3s; 
+            opacity: 0; 
         }
         
         .brand-visual-box:hover .brand-nav-btn { opacity: 1; }
@@ -425,6 +525,23 @@
             .dropdown.open > a .drop-icon, .sub-dropdown.open > a .sub-drop { transform: rotate(180deg) !important; }
             .dropdown-content a, .sub-dropdown-content a { padding: 12px 0 12px 20px !important; border: none !important; }
 
+            /* PRELOADER ÜÇÜN MOBİL DÜZƏLİŞLƏR */
+            .loader-brand {
+                font-size: 1.8rem; /* Çox böyük şrift kiçildildi */
+                letter-spacing: 6px; /* Hərflərarası məsafə azaldıldı */
+                animation: typing-mobile 3s steps(18), blink 0.5s step-end infinite;
+            }
+            
+            .loader-subtitle {
+                font-size: 0.85rem !important;
+                letter-spacing: 5px !important;
+            }
+
+            @keyframes typing-mobile { 
+                from { width: 0 } 
+                to { width: 300px } /* Mobildə yazı genişliyi limitsiz deyil, ekrana uyğun tənzimləndi */
+            }
+
             .contact-grid-system { grid-template-columns: 1fr; gap: 80px; }
             .hero-inner-box h1 { font-size: 3.5rem; }
             .brand-node { flex-direction: column !important; text-align: center; }
@@ -438,7 +555,11 @@
 
     <div id="preloader">
         <div class="loader-brand"><span class="p1">ALPA TRADE</span> <span class="p2">ASC</span></div>
-        <p style="letter-spacing: 12px; color: var(--primary-blue); font-size: 0.85rem; font-weight: 950; margin-top: 40px; text-transform: uppercase;">Leadership in Distribution</p>
+        <div class="loader-subtitle">
+            Leadership<br>
+            in<br>
+            Distribution
+        </div>
     </div>
 
     <header id="mainHeader">
@@ -498,7 +619,7 @@
 
     <section class="hero-viewport" id="home">
         <div class="hero-engine" id="heroEngine">
-            <div class="hero-slide active" style="background-image: url('../SAYT FOTO/FEVER-TREE/6.jpg');">
+            <div class="hero-slide active" style="background-image: url(https://i.ibb.co/PzzqhdDk/1111.png);">
                 <div class="hero-inner-box">
                     <h1 data-lang="h1_t">PREMİUM <span>KEYFİYYƏT</span></h1>
                     <a href="#brands" class="premium-btn" style="margin-top: 60px;" data-lang="btn_e">Kəşf et</a>
@@ -859,5 +980,4 @@
         });
     </script>
 </body>
-
 </html>
